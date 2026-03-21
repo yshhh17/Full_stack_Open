@@ -1,17 +1,16 @@
 sequenceDiagram
     participant browser
     participant server
-    Note right of browser: user writes a note and Saves
+    Note right of browser: user opens SPA page
 
-    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/spa
     activate server
     server->>browser: HTTP 302 Redirects to /notes
     deactivate server
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
     activate server
-    Note right of server: server saves updates notes
-    server-->>browser: Updated HTML document
+    server-->>browser: HTML document
     deactivate server
 
     browser->>server: GET main.css
@@ -20,9 +19,11 @@ sequenceDiagram
     browser->>server: GET main.js
     server-->>browser: Javascript file
 
+    Note right of browser: browser executes js and fetches data
+
     browser->>server: GET data.json
     activate server
-    server-->>browser: Updated notes JSON
+    server-->>browser: Json [{"content": "blah", "date": "1"}]
     deactivate server
 
-    Note right of browser: Browser renders updated notes
+    Note right of browser: Javascript renders notes without reloading the page.
